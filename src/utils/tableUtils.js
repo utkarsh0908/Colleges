@@ -1,5 +1,3 @@
-import Fuse from "fuse.js";
-
 const addSuffix = (number) => {
   if ([11, 12, 13].includes(number % 100)) {
       return number + "th";
@@ -24,21 +22,7 @@ const addCommas = (number) => {
   return wholePart + decimalPart;
 }
 
-const filterColleges = (value, tabledata, setTableData, endingIndex) => {
-  if (value !== '') {
-    const fuse = new Fuse(tabledata, { keys: ['name'] });
-    const results = fuse.search(value);
-    setTableData(results.map((result) => result.item));
-  } else {
-    setTableData(tabledata.slice(0, endingIndex));
-  }
-}
 
-const handleSearchQueryChange = (event, setSearchQuery, tabledata, setTableData, endingIndex) => {
-  const { value } = event.target;
-  setSearchQuery(value);
-  filterColleges(value, tabledata, setTableData, endingIndex);
-}
 
 const sortTable = (sorting, tableData, setTableData) => {
   if (sorting.length > 0) {
@@ -72,4 +56,4 @@ const sortTable = (sorting, tableData, setTableData) => {
 };
 
 
-export { addCommas, addSuffix, filterColleges, handleSearchQueryChange, sortTable };
+export { addCommas, addSuffix, sortTable };
