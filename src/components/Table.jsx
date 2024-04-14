@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import tabledata from "../data/tableData";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 import { sortTable } from "../utils/tableUtils";
 import { GoDash } from "react-icons/go";
@@ -14,7 +13,6 @@ import {
   Input,
 } from "@mui/material";
 import {
-  createColumnHelper,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -22,49 +20,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import FeaturedRibbon from "./FeaturedRibbon";
-import {
-  CDRank,
-  Colleges,
-  Fees,
-  Package,
-  UserReviews,
-  Ranking,
-} from "./TableColumns";
 
-const columnHelper = createColumnHelper();
-
-const columns = [
-  columnHelper.accessor("CDRank", {
-    header: "CD Rank",
-    cell: (item) => <CDRank item={item} />,
-  }),
-  columnHelper.accessor("name", {
-    header: "Colleges",
-    cell: (item) => <Colleges item={item} />,
-  }),
-  columnHelper.accessor("fees", {
-    header: "Course Fees",
-    cell: (item) => <Fees item={item} />,
-  }),
-  columnHelper.accessor("package", {
-    header: "Placements",
-    cell: (item) => <Package item={item} />,
-  }),
-  columnHelper.accessor("reviews", {
-    header: "User Reviews",
-    cell: (item) => <UserReviews item={item} />,
-  }),
-  columnHelper.accessor("rank", {
-    header: "Ranking",
-    cell: (item) => <Ranking item={item} />,
-  }),
-];
-
-const CollegeTable = () => {
+const CollegeTable = ({ columns, data }) => {
   const [endingIndex, setEndingIndex] = useState(10);
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
-  const [tableData, setTableData] = useState(tabledata.slice(0, endingIndex));
+  const [tableData, setTableData] = useState(data.slice(0, endingIndex));
 
   const table = useReactTable({
     data: tableData,
@@ -92,7 +53,7 @@ const CollegeTable = () => {
   };
 
   useEffect(() => {
-    const newTableData = tabledata.slice(0, endingIndex);
+    const newTableData = data.slice(0, endingIndex);
     setTableData(newTableData);
   }, [endingIndex]);
 
